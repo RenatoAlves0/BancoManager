@@ -1,0 +1,11 @@
+C:\Users\renat\Documents\Workspaces\VS\LP2\BancoManager\bin\Debug\netcoreapp2.1\BancoManager.deps.json
+C:\Users\renat\Documents\Workspaces\VS\LP2\BancoManager\bin\Debug\netcoreapp2.1\BancoManager.runtimeconfig.json
+C:\Users\renat\Documents\Workspaces\VS\LP2\BancoManager\bin\Debug\netcoreapp2.1\BancoManager.runtimeconfig.dev.json
+C:\Users\renat\Documents\Workspaces\VS\LP2\BancoManager\bin\Debug\netcoreapp2.1\BancoManager.dll
+C:\Users\renat\Documents\Workspaces\VS\LP2\BancoManager\bin\Debug\netcoreapp2.1\BancoManager.pdb
+C:\Users\renat\Documents\Workspaces\VS\LP2\BancoManager\obj\Debug\netcoreapp2.1\BancoManager.csprojAssemblyReference.cache
+C:\Users\renat\Documents\Workspaces\VS\LP2\BancoManager\obj\Debug\netcoreapp2.1\BancoManager.csproj.CoreCompileInputs.cache
+C:\Users\renat\Documents\Workspaces\VS\LP2\BancoManager\obj\Debug\netcoreapp2.1\BancoManager.AssemblyInfoInputs.cache
+C:\Users\renat\Documents\Workspaces\VS\LP2\BancoManager\obj\Debug\netcoreapp2.1\BancoManager.AssemblyInfo.cs
+C:\Users\renat\Documents\Workspaces\VS\LP2\BancoManager\obj\Debug\netcoreapp2.1\BancoManager.dll
+C:\Users\renat\Documents\Workspaces\VS\LP2\BancoManager\obj\Debug\netcoreapp2.1\BancoManager.pdb
