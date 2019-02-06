@@ -2,6 +2,7 @@
 
 using System;
 using static System.Console;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
@@ -38,15 +39,21 @@ namespace BancoManager.Model
             }
         }
 
-        public int BuscarAgencia (string id)
+        public Agencia BuscarAgencia (string id)
         {
-            foreach (var a in agencias)
-            {
-                if (id.Equals(a.Id)) return agencias.IndexOf(a);
+            using (var context = new Context()) {
+                try
+                {
+                    var agencia = context.Agencias
+                    .Single(a => a.Id == id);
+                    return agencia;
+                }
+                catch (Exception)
+                {
+                    WriteLine("\n!!! Agência não cadastrada !!!\n");
+                    return null;
+                }
             }
-
-            WriteLine("!!! Agência não cadastrada !!!");
-            return -1;
         }
     }
 }

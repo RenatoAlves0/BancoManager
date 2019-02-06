@@ -9,9 +9,10 @@ namespace BancoManager.Model
 {
     public class ContaCorrente
     {
-        public ContaCorrente(Cliente t)
+        public ContaCorrente(Cliente t, string agenciaId)
         {
             Titular = t;
+            AgenciaId = agenciaId;
         }
 
         public const decimal Taxa = 0.10M;
@@ -30,6 +31,10 @@ namespace BancoManager.Model
         {
             get { return Titular.Id + "(CC)"; }
             set { }
+        }
+
+        public string AgenciaId{
+            get; set;
         }
 
         public virtual void Depositar(decimal v)

@@ -3,107 +3,108 @@
 using System;
 using static System.Console;
 using System.Collections.Generic;
+using System.Linq;
 using BancoManager.Model;
 using System.Text;
+//using (var context = new Context()) { }
 
 namespace BancoManager
 {
     public class Program
     {
-        static void Main(string[] args)
+        Context context = new Context();
+        List<Banco> bancos = new List<Banco>();
+        List<Cliente> clientes = new List<Cliente>();
+
+        public static void Main(string[] args)
         {
-            using (var context = new Context())
+
+            Program solicitacoes = new Program();
+
+            solicitacoes.Logar();
+
+            string op = "";
+
+            while (!op.Equals("0"))
             {
+                WriteLine("\n\nBem vind# ao BancoManager");
+                WriteLine("0. Sair\n");
 
-                Program solicitacoes = new Program();
+                WriteLine("Banco");
+                WriteLine("1.1 Cadastrar");
+                //WriteLine("1.2 Listar\n");
 
-                solicitacoes.Logar();
+                WriteLine("Agência");
+                WriteLine("2.1 Cadastrar");
+                //WriteLine("2.2 Listar\n");
 
-                string op = "";
+                WriteLine("Conta Poupança");
+                WriteLine("3.1 Cadastrar");
+                //WriteLine("3.2 Listar");
+                //WriteLine("3.3 Saldo");
+                //WriteLine("3.4 Depositar");
+                //WriteLine("3.5 Sacar\n");
 
-                while (!op.Equals("0"))
+                WriteLine("Conta Corrente");
+                WriteLine("4.1 Cadastrar");
+                //WriteLine("4.2 Listar");
+                //WriteLine("4.3 Saldo");
+                //WriteLine("4.4 Depositar");
+                //WriteLine("4.5 Sacar");
+                Write("_");
+
+                op = ReadLine();
+
+                switch (op)
                 {
-                    WriteLine("\n\nBem vind# ao BancoManager");
-                    WriteLine("0. Sair\n");
+                    case "1.1":
+                        solicitacoes.AddBanco();
+                        break;
+                    case "1.2":
+                        solicitacoes.ListBancos();
+                        break;
 
-                    WriteLine("Banco");
-                    WriteLine("1.1 Cadastrar");
-                    WriteLine("1.2 Listar\n");
+                    case "2.1":
+                        solicitacoes.AddAgencia();
+                        break;
+                    case "2.2":
+                        solicitacoes.ListAgencias();
+                        break;
 
-                    WriteLine("Agência");
-                    WriteLine("2.1 Adicionar");
-                    WriteLine("2.2 Listar\n");
+                    case "3.1":
+                        solicitacoes.AddContaPoupanca();
+                        break;
+                    case "3.2":
+                        solicitacoes.ListContasPoupanca();
+                        break;
+                    case "3.3":
+                        solicitacoes.ConsultarContaPoupanca();
+                        break;
+                    case "3.4":
+                        solicitacoes.DepositarContaPoupanca();
+                        break;
+                    case "3.5":
+                        solicitacoes.SacarContaPoupanca();
+                        break;
 
-                    WriteLine("Conta Poupança");
-                    WriteLine("3.1 Cadastrar");
-                    WriteLine("3.2 Listar");
-                    WriteLine("3.3 Saldo");
-                    WriteLine("3.4 Depositar");
-                    WriteLine("3.5 Sacar\n");
-
-                    WriteLine("Conta Corrente");
-                    WriteLine("4.1 Cadastrar");
-                    WriteLine("4.2 Listar");
-                    WriteLine("4.3 Saldo");
-                    WriteLine("4.4 Depositar");
-                    WriteLine("4.5 Sacar");
-                    Write("_");
-
-                    op = ReadLine();
-
-                    switch (op)
-                    {
-                        case "1.1":
-                            solicitacoes.AddBanco();
-                            break;
-                        case "1.2":
-                            solicitacoes.ListBancos();
-                            break;
-
-                        case "2.1":
-                            solicitacoes.AddAgencia();
-                            break;
-                        case "2.2":
-                            solicitacoes.ListAgencias();
-                            break;
-
-                        case "3.1":
-                            solicitacoes.AddContaPoupanca();
-                            break;
-                        case "3.2":
-                            solicitacoes.ListContasPoupanca();
-                            break;
-                        case "3.3":
-                            solicitacoes.ConsultarContaPoupanca();
-                            break;
-                        case "3.4":
-                            solicitacoes.DepositarContaPoupanca();
-                            break;
-                        case "3.5":
-                            solicitacoes.SacarContaPoupanca();
-                            break;
-
-                        case "4.1":
-                            solicitacoes.AddContaCorrente();
-                            break;
-                        case "4.2":
-                            solicitacoes.ListContasCorrente();
-                            break;
-                        case "4.3":
-                            solicitacoes.ConsultarContaCorrente();
-                            break;
-                        case "4.4":
-                            solicitacoes.DepositarContaCorrente();
-                            break;
-                        case "4.5":
-                            solicitacoes.SacarContaCorrente();
-                            break;
-                    }
+                    case "4.1":
+                        solicitacoes.AddContaCorrente();
+                        break;
+                    case "4.2":
+                        solicitacoes.ListContasCorrente();
+                        break;
+                    case "4.3":
+                        solicitacoes.ConsultarContaCorrente();
+                        break;
+                    case "4.4":
+                        solicitacoes.DepositarContaCorrente();
+                        break;
+                    case "4.5":
+                        solicitacoes.SacarContaCorrente();
+                        break;
                 }
             }
         }
-        List<Banco> bancos = new List<Banco>();
-        List<Cliente> clientes = new List<Cliente>();
 
         public Cliente Eu
         {
@@ -118,8 +119,9 @@ namespace BancoManager
             WriteLine("Coloque apenas números -> 00000000000 ");
             Write("_");
             cliente.Id = ReadLine();
+            Eu = SearchCliente(cliente.Id);
 
-            if (SearchCliente(cliente.Id) == null)
+            if (Eu == null)
             {
                 WriteLine("\nPercebemos que você ainda não está cadastrad#!");
                 WriteLine("Informe seu nome, para poder-mos lhe cadastrar ");
@@ -133,31 +135,24 @@ namespace BancoManager
             }
             else
             {
-                Eu = cliente;
-                WriteLine("\nBem vind# " + SearchCliente(cliente.Id).Nome + " !");
+                WriteLine("\nBem vind# " + Eu.Nome + " !");
                 return Eu;
             }
         }
 
-        public Cliente TrocarUsuario()
-        {
-            string op = "";
-            WriteLine("Deseja continuar como " + Eu.Nome + " ? S/N");
-            Write("_");
-            op = ReadLine();
-
-            if (op.ToLower().Equals("s")) return Eu;
-            else return Logar();
-        }
-
         public Cliente SearchCliente(string id)
         {
-            foreach (var cliente in clientes)
+            try
             {
-                if (id.Equals(cliente.Id)) return cliente;
+                var cliente = context.Clientes
+                .Single(c => c.Id == id);
+                return cliente;
             }
-
-            return null;
+            catch (Exception)
+            {
+                WriteLine("\n!!! Cliente não cadastrado !!!\n");
+                return null;
+            }
         }
 
         public void AddCliente(Cliente cliente)
@@ -174,7 +169,9 @@ namespace BancoManager
             Write("Identificador: ");
             b.Id = ReadLine();
 
-            bancos.Add(b);
+            //bancos.Add(b);
+            context.Bancos.Add(b);
+            context.SaveChanges();
         }
 
         public void ListBancos()
@@ -188,41 +185,47 @@ namespace BancoManager
             }
         }
 
-        public int SearchBanco(string id)
+        public Banco SearchBanco(string id)
         {
-            foreach (var b in bancos)
+            using (var dataBase = new Context())
             {
-                if (id.Equals(b.Id))
+                try
                 {
-                    return bancos.IndexOf(b);
+                    var banco = dataBase.Bancos
+                    .Single(b => b.Id == id);
+                    return banco;
+                }
+                catch (Exception)
+                {
+                    WriteLine("\n!!! Banco não cadastrado !!!\n");
+                    return null;
                 }
             }
-            WriteLine("\n!!! Banco não cadastrado !!!\n");
-
-            return -1;
         }
 
         public void AddAgencia()
         {
             WriteLine("\n*** Dados do Banco ***\n");
-            int banco;
+            Banco banco;
             string opcao = "";
             Agencia agencia = new Agencia();
 
             Write("Identificador: ");
             banco = SearchBanco(ReadLine());
-            if (banco == -1) return;
+            if (banco == null) return;
             else
             {
-
-                WriteLine("\n*** Nova Agência do " + bancos[banco].Nome + " ***\n");
+                WriteLine("\n*** Nova Agência do " + banco.Nome + " ***\n");
 
                 Write("Nome: ");
                 agencia.Nome = ReadLine();
                 Write("Identificador: ");
                 agencia.Id = ReadLine();
 
-                bancos[banco].AddAgencia(agencia);
+                agencia.BandoId = banco.Id;
+                context.Agencias.Add(agencia);
+                context.SaveChanges();
+                // banco.AddAgencia(agencia);
 
             }
 
@@ -242,10 +245,10 @@ namespace BancoManager
         public void ListAgencias()
         {
             WriteLine("\n*** Dados do Banco ***\n");
-            int banco;
+            Banco banco;
             Write("Identificador: ");
             banco = SearchBanco(ReadLine());
-            if (banco != -1) bancos[banco].ListAgencias();
+            if (banco != null) banco.ListAgencias();
         }
 
         // Poupança
@@ -256,15 +259,12 @@ namespace BancoManager
             if (agencia == null) return;
             else
             {
-                Cliente cliente = new Cliente();
-                cliente = TrocarUsuario();
-
                 WriteLine("\n*** Dados da Conta ***\n");
                 Write("Taxa de juros: ");
                 decimal juros = Convert.ToDecimal(ReadLine());
 
-                agencia.AddCp(juros, DateTime.Now, cliente);
-                agencia.ExibirCp(cliente.Id);
+                agencia.AddCp(juros, DateTime.Now, Eu, agencia.Id);
+                agencia.ExibirCp(Eu.Id);
             }
         }
 
@@ -306,11 +306,8 @@ namespace BancoManager
             if (agencia == null) return;
             else
             {
-                Cliente cliente = new Cliente();
-                cliente = TrocarUsuario();
-
-                agencia.AddCc(cliente);
-                agencia.ExibirCc(cliente.Id);
+                agencia.AddCc(Eu, agencia.Id);
+                agencia.ExibirCc(Eu.Id);
             }
         }
 
@@ -349,13 +346,12 @@ namespace BancoManager
         public Agencia IdentificarAgencia()
         {
             WriteLine("\n*** Dados do Banco ***\n");
-            string banco = "", agencia = "";
-            int idBanco, idAgencia;
+            Agencia agencia;
+            Banco banco;
 
             Write("Idenditifcador: ");
-            banco = ReadLine();
-            idBanco = SearchBanco(banco);
-            if (idBanco.Equals("-1"))
+            banco = SearchBanco(ReadLine());
+            if (banco == null)
             {
                 WriteLine("\n!!! Banco não cadastrado !!!\n");
                 WriteLine("\n!!! É necessário cadastrar um Banco antes de realizar esta operação !!!\n");
@@ -365,16 +361,13 @@ namespace BancoManager
             {
                 WriteLine("\n*** Dados da Agência ***\n");
                 Write("Identificador: ");
-                agencia = ReadLine();
-                idAgencia = bancos[idBanco].BuscarAgencia(agencia);
-                if (idAgencia.Equals("-1"))
+                agencia = banco.BuscarAgencia(ReadLine());
+                if (agencia == null)
                 {
-                    WriteLine("\n!!! Agência não cadastrada !!!\n");
                     WriteLine("\n!!! É necessário cadastrar uma Agência antes de realizar esta operação !!!\n");
                     return null;
                 }
-                else return bancos[idBanco].agencias[idAgencia];
-
+                else return agencia;
             }
         }
     }

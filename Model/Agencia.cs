@@ -23,14 +23,30 @@ namespace BancoManager.Model
             get; set;
         }
 
+        public string BandoId
+        {
+            get; set;
+        }
+
         // Poupança
 
-        public void AddCp(decimal juros, DateTime aniversario, Cliente cliente)
+        public void AddCp(decimal juros, DateTime aniversario, Cliente cliente, string agenciaId)
         {
-            ContaPoupanca cp = new ContaPoupanca(juros, aniversario, cliente);
-            contasPoupancas.Add(cp);
+            using (var context = new Context())
+            {
+                try
+                {
+                    ContaPoupanca cp = new ContaPoupanca(juros, aniversario, cliente, agenciaId);
+                    context.ContasPoupanca.Add(cp);
+                    context.SaveChanges();
+                    WriteLine("\nConta cadastrada com sucesso !\n");
 
-            WriteLine("\nConta cadastrada com sucesso !\n");
+                }
+                catch (Exception)
+                {
+                    WriteLine("Você não pode ter duas Contas Poupança!");
+                }
+            }
         }
 
         public void ListarCps()
@@ -92,11 +108,23 @@ namespace BancoManager.Model
 
         // Corrente
 
-        public void AddCc(Cliente cliente)
+        public void AddCc(Cliente cliente, string agenciaId)
         {
-            ContaCorrente cc = new ContaCorrente(cliente);
-            contasCorrentes.Add(cc);
-            WriteLine("\nConta cadastrada com sucesso !\n");
+            using (var context = new Context())
+            {
+                try
+                {
+                    ContaCorrente cc = new ContaCorrente(cliente, agenciaId);
+                    context.ContasCorrente.Add(cc);
+                    context.SaveChanges();
+                    WriteLine("\nConta cadastrada com sucesso !\n");
+
+                }
+                catch (Exception)
+                {
+                    WriteLine("Você não pode ter duas Contas Corrente!");
+                }
+            }
         }
 
         public void ListarCcs()
@@ -111,7 +139,7 @@ namespace BancoManager.Model
             Write("\n");
         }
 
-        public ContaCorrente SearchCC (string id)
+        public ContaCorrente SearchCC(string id)
         {
             string idConta = id + "(CC)";
             foreach (var c in contasCorrentes)

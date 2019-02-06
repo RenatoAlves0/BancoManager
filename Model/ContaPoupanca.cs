@@ -9,11 +9,12 @@ namespace BancoManager.Model
 {
     public class ContaPoupanca
     {
-        public ContaPoupanca(decimal j, DateTime a, Cliente t)
+        public ContaPoupanca(decimal j, DateTime a, Cliente t, string agenciaId)
         {
             Juros = j;
             Aniversario = a;
             Titular = t;
+            AgenciaId = agenciaId;
         }
 
         public decimal Saldo
@@ -59,6 +60,10 @@ namespace BancoManager.Model
         {
             get { return Titular.Id + "(CP)"; }
             set { }
+        }
+
+        public string AgenciaId{
+            get; set;
         }
 
     }
